@@ -2,7 +2,7 @@
 fourier-kin-dec performs kinetic deconvolution of time-resolved difference structure factors directly in Fourier (reciprocal) space. Given a kinetic model (species occupancies over time) and a series of experimental difference structure factors + uncertainties, the program reconstructs the difference structure factors corresponding to the individual kinetic intermediates while propagating experimental uncertainties.
 
 # Requirements
-The script requires Python 3 together with the numpy and pandas packages. The remaining imported modules (argparse, pathlib and collections) are part of the Python standard library. CCP4 is only required to generate the input `.hkl` and `.phs` files from MTZ files (e.g. using `mtz2various`). Once the input files have been prepared, the kinetic deconvolution can be run without any CCP4 programs. 
+The script requires Python 3 together with the numpy and pandas packages. The remaining imported modules (argparse, pathlib and collections) are part of the Python standard library. CCP4 is only required to generate the input `.hkl` and `.phs` files from MTZ files (e.g. using `mtz2various`). Once the input files have been prepared, the kinetic deconvolution can be run without any CCP4 programs. If you want to visualize your results, you will need the `f2mtz` and `fft` program in CCP4. The CCP4 installation instructions can be found here: https://www.ccp4.ac.uk/download/doc/installation.html
 
 # Input data 
 The program requires:
@@ -14,13 +14,15 @@ The program requires:
 - A **concentration matrix** (`.csv`) containing the occupancy of each kinetic species at every timepoint. The names of the timepoints need to match the `.phs` and `.hkl` files. 
 
 The expected column layout for each input file is defined at the beginning of the Python script (`PHS_COLUMNS`, `HKL_COLUMNS`, and `DARK_PHASE_COLUMNS`). 
-The required `.hkl` and `.phs` files can be written from MTZ files using `mtz2various`. Example commands for exporting the dark-state amplitudes, sigmas, and phases are shown below. The other files can be exported in the same way:
+The required `.hkl` and `.phs` files can be written from MTZ files using `mtz2various`. Example command for exporting the **dark-state phase file** are shown below. 
 
 `mtz2various HKLIN input.mtz HKLOUT dark_phase.hkl << EOF \\
 LABIN FP=<Amplitude_column> SIGFP=<Amplitude_sigma_column> PHIC=<Phase_column> \\
 OUTPUT USER '(3I5,3F12.3)' \\
 RESOLUTION <min_resolution> <max_resolution> \\
 EOF`
+
+For the **dark-state amplitude/sigma file**, as well as the **difference structure factor file** with the corresponding **sigma file**, they can be exported in the same way with adjusting the LABIN lables.
 
 # Simulated data - Example 
 As described in the paper, difference structure factors were simulated for 17 timepoints containing different concentrations of four structural intermediates of the photoactive yellow protein (PYP). 
@@ -36,7 +38,7 @@ These files can be used to reproduce the example analysis described in the paper
 # Usage
 The script can be run on the simulated data with the following commands:
 
-`./kinetic_deconvolution.py --concentrations concentrations.csv --phs-dir phs --hkl-dir hkl --dark-sigma dark_scaled.hkl --dark-phase dark_phase.hkl --out-prefix state`
+`python kinetic_deconvolution.py --concentrations concentrations.csv --phs-dir phs --hkl-dir hkl --dark-sigma dark_scaled.hkl --dark-phase dark_phase.hkl --out-prefix state`
 
 The script first loads and displays the concentration matrix, including the number and names of the structural intermediates. It then performs phase correction and amplitude sign adjustment of the input difference structure factors. For the provided simulated dataset, no reflections require phase correction because the phases and amplitudes were already generated consistently.
 
@@ -44,4 +46,5 @@ The script filters reflections based on their presence across the dataset. By de
 
 The resulting kinetic modes are saved as `.phs` files containing the reconstructed difference structure factor amplitudes and phases, together with corresponding `.hkl` files containing the propagated uncertainties. These files can be used for further structure factor extrapolation.
 
-The generated `.phs` files can be converted to `.mtz` format using `f2mtz` from CCP4. Electron density maps can then be calculated using `fft` in CCP4 for visualization. We provide a `phs_to_map.sh` CCP4 script, which can be used to convert the final `.phs` files to DED maps.    
+The generated `.phs` files can be converted to `.mtz` format using `f2mtz` from CCP4. Electron density maps can then be calculated using `fft` in CCP4 for visualization. We provide a `phs_to_map.sh` CCP4 script, which can be used to convert the final `.phs` files to DED maps. It can be run by simply doing:
+`bash phs_to_map.sh state_1_pr0` 
