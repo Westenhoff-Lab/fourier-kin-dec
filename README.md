@@ -48,3 +48,4 @@ The resulting kinetic modes are saved as `.phs` files containing the reconstruct
 
 The generated `.phs` files can be converted to `.mtz` format using `f2mtz` from CCP4. Electron density maps can then be calculated using `fft` in CCP4 for visualization. We provide a `phs_to_map.sh` CCP4 script, which can be used to convert the final `.phs` files to DED maps. It can be run in the terminal by simply doing:
 `tcsh phs_to_map.sh state_1_pr0` 
+You can then take a look at the deconvoluted maps in coot using the `dark.pdb`. 
