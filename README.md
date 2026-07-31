@@ -35,7 +35,9 @@ These files can be used to reproduce the example analysis described in the paper
 
 # Usage
 The script can be run on the simulated data with the following commands:
+
 `./kinetic_deconvolution.py --concentrations concentrations.csv --phs-dir phs --hkl-dir hkl --dark-sigma dark_scaled.hkl --dark-phase dark_phase.hkl --out-prefix state`
+
 The script first loads and displays the concentration matrix, including the number and names of the structural intermediates. It then performs phase correction and amplitude sign adjustment of the input difference structure factors. For the provided simulated dataset, no reflections require phase correction because the phases and amplitudes were already generated consistently.
 
 The script filters reflections based on their presence across the dataset. By default, reflections present in at least 12 of the 17 timepoints are retained. For the ideal simulated dataset, all 9793 reflections pass this criterion.
