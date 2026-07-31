@@ -16,10 +16,10 @@ The program requires:
 The expected column layout for each input file is defined at the beginning of the Python script (`PHS_COLUMNS`, `HKL_COLUMNS`, and `DARK_PHASE_COLUMNS`). 
 The required `.hkl` and `.phs` files can be written from MTZ files using `mtz2various`. Example commands for exporting the dark-state amplitudes, sigmas, and phases are shown below. The other files can be exported in the same way:
 
-`mtz2various HKLIN input.mtz HKLOUT dark_phase.hkl << EOF
-LABIN FP=<Amplitude_column> SIGFP=<Amplitude_sigma_column> PHIC=<Phase_column> 
-OUTPUT USER '(3I5,3F12.3)'
-RESOLUTION <min_resolution> <max_resolution>
+`mtz2various HKLIN input.mtz HKLOUT dark_phase.hkl << EOF \\
+LABIN FP=<Amplitude_column> SIGFP=<Amplitude_sigma_column> PHIC=<Phase_column> \\
+OUTPUT USER '(3I5,3F12.3)' \\
+RESOLUTION <min_resolution> <max_resolution> \\
 EOF`
 
 # Simulated data - Example 
