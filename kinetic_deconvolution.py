@@ -351,9 +351,9 @@ def main():
     parser.add_argument("--concentrations", required=True,
                          help="CSV: timepoint label column + per-species occupancy columns")
     parser.add_argument("--phs-dir", required=True)
-    parser.add_argument("--phs-pattern", default="{label}.phs")
+    parser.add_argument("--phs-pattern", default="{label}_diff.phs")
     parser.add_argument("--hkl-dir", required=True)
-    parser.add_argument("--hkl-pattern", default="{label}_sigma.hkl")
+    parser.add_argument("--hkl-pattern", default="{label}_scaled.hkl")
     parser.add_argument("--dark-sigma", required=True, help=".hkl file with dark-state sigmas")
     parser.add_argument("--dark-phase", required=True, help=".hkl file with dark-state phases")
     parser.add_argument(
