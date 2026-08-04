@@ -11,9 +11,9 @@ set bin_nam = $1
 # ===========================================
 
 set dark_model = dark.pdb
+set model_F    = dark.mtz
 set dark_obs   = FOBS_dark.mtz
 set light_obs  = FOBS_${bin_nam}.mtz
-set model_F    = dark.mtz
 
 # ===========================================
 # Crystal information (EDIT THESE)
