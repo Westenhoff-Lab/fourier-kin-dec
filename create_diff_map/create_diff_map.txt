@@ -1,0 +1,1 @@
+Here you can find an example experimental timepoint with FOBS_375fs.mtz, FOBS_dark.mtz, dark.pdb and dark.mtz. Using the make_dmap.sh and weight.py script we generate weighted difference structure factors and other input files for the kinetic deconvolution.  
