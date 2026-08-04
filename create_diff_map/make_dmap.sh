@@ -28,7 +28,7 @@ set grid = "240 240 576"
 # =============================
 
 # Model MTZ (dark.mtz)
-set model_F_col   = F
+set model_F_col   = FC
 set model_PHI_col = PHIC
 
 # Dark observed MTZ (FOBS_dark.mtz)
