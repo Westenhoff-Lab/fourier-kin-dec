@@ -24,6 +24,11 @@ EOF`
 
 For the **dark-state amplitude/sigma file**, as well as the **difference structure factor file** with the corresponding **sigma file**, they can be exported in the same way with adjusting the LABIN lables.
 
+Alternatively, the folder `create_diff_map` contains the script `make_dmap.sh`, which provides a complete starting point for generating the required input files from raw crystallographic data. Given raw structure factor amplitudes for the light data (`FOBS_<timepoint>.mtz`), raw amplitudes for the reference data (`FOBS_<reference>.mtz`), a refined reference model (`<reference>.pdb`), and the corresponding MTZ file containing reference phases (`<reference>.mtz`), the script runs the full CCP4/Python pipeline to calculate weighted difference structure factors and difference maps. It then generates all `.phs/.hkl` input files needed for the deconvolution step above. 
+
+Before running the script, adjust the input file names, column labels, and crystal information at the beginning of the script using a text editor. The script can then be executed as:
+`tcsh make_dmap.sh <timepoint>` 
+
 # Simulated data - Example 
 As described in the paper, difference structure factors were simulated for 17 timepoints containing different concentrations of four structural intermediates of the photoactive yellow protein (PYP). 
 
