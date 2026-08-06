@@ -59,13 +59,13 @@ The generated `.phs` files can be converted to `.mtz` format using `f2mtz` from 
 You can then take a look at the deconvoluted maps in coot using the `dark.pdb`. 
 
 # How to continue from here 
-The deconvoluted weighted difference structure factors (`.phs` file), together with the propagated sigmas (`.hkl` file) can now be used to calculate extrapolated structure factors. For that, we provide a CCP4/python script, which takes the generated files together with the calculated structure factors fo the reference state (`dark_phase.hkl` file) and calculates extrapolated structure factors by
-F<sub>ext</sub> = F<sub>calc</sub> + N × (ω × ΔF<sub>obs</sub>), where N is an extrapolation factor which corresponds to the photoactivation yield 2/occupancy.
+The deconvoluted weighted difference structure factors (`.phs` file), together with the propagated sigmas (`.hkl` file) can now be used to calculate extrapolated structure factors. For that, we provide a CCP4/python script, which takes the generated files together with the calculated structure factors fo the reference state (`dark_phase.hkl` file) and calculates **extrapolated structure factors** by
+F<sub>ext</sub> = F<sub>calc</sub> + N × (ω × ΔF<sub>obs</sub>), where N is an extrapolation factor which corresponds to the photoactivation yield 2/occupancy. Several methods have been proposed to estimate N, and users should determine it using their method of choice.
 
 Before running the script, adjust the input file names and crystal information at the beginning of the script using a text editor. The script can then be executed as:
 `tcsh make_extrapol_map.sh <add_factor> <timepoint/state_name>` 
 
-From the resulting extrapolated `.mtz` file, structures can be refined using either CCP4 or phenix. Important to note here is, that the refined structures will most likely result in high R<sub>work</sub> and R<sub>free</sub> values due to keeping dark phases. 
+From the resulting extrapolated `.mtz` file, structures can be refined using either CCP4 or phenix. Important to note here is, that the refined structures will most likely result in high R<sub>work</sub> and R<sub>free</sub> values due to the phase error introduced when adding difference amplitudes to the dark state structure factors. The true light phase can be estimated, and a script for generating **phased extrapolated structure factors** will be made available soon. 
 
 # Conventional workflow 
 The `create_diff_map` and `create_extrapol_map` workflow can also be used for timepoints without using the deconvolution approach. This workflow is based on Schmidt (2023, Structural Dynamics). 
