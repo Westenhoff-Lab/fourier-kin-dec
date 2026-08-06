@@ -2,7 +2,7 @@
 This python code performs kinetic deconvolution of time-resolved difference structure factors directly in Fourier (reciprocal) space. Given a kinetic model (species occupancies over time) and a series of experimental difference structure factors $\Delta F$ + uncertainties $\sigma$, the program reconstructs the difference structure factors corresponding to the individual kinetic intermediates while propagating experimental uncertainties.
 
 # Requirements
-The script requires Python 3 together with the numpy and pandas packages. The remaining imported modules (argparse, pathlib and collections) are part of the Python standard library when you create a conda environment. We recommend to install CCP4, which is required to generate the required input `.hkl` and `.phs` files through the provided `create_diff_map` pipeline. Once the input files have been prepared, the kinetic deconvolution can be run without any other crystallographic programs. For visualization or conversion of your results, you can use the `f2mtz` and `fft` program in CCP4 or the equivalent tools in phenix. Furthermore, the provided `make_extrapol_map.sh` script also requires CCP4. The CCP4 installation instructions can be found here: https://www.ccp4.ac.uk/download/doc/installation.html
+The script requires Python 3 together with the numpy and pandas packages. The remaining imported modules (argparse, pathlib and collections) are part of the Python standard library when you create a conda environment. We recommend installing CCP4, which is required to generate the required input `.hkl` and `.phs` files through the provided `create_diff_map` pipeline. Once the input files have been prepared, the kinetic deconvolution can be run without any other crystallographic programs. For visualization or conversion of your results, you can use the `f2mtz` and `fft` program in CCP4 or the equivalent tools in phenix. Furthermore, the provided `make_extrapol_map.sh` script also requires CCP4. The CCP4 installation instructions can be found here: https://www.ccp4.ac.uk/download/doc/installation.html
 
 
 # Input data 
@@ -23,7 +23,7 @@ Before running the script, adjust the input file names, column labels, and cryst
 `tcsh make_dmap.sh <timepoint>` 
 
 ## Alternative way to generate the input data 
-Alternatively, the required `.hkl` and `.phs` files can be written from MTZ files using `mtz2various`. Example command for exporting the **dark-state phase file** are shown below. 
+Alternatively, the required `.hkl` and `.phs` files can be written from already existing MTZ files (from other pipelines when calculating difference structure factors) using `mtz2various`. Example command for exporting the **dark-state phase file** are shown below. 
 
 `mtz2various HKLIN input.mtz HKLOUT dark_phase.hkl << EOF \\
 LABIN FP=<Amplitude_column> SIGFP=<Amplitude_sigma_column> PHIC=<Phase_column> \\
