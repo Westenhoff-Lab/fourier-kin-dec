@@ -33,9 +33,25 @@ EOF`
 
 The same approach can be used for the dark-state amplitude/sigma file, as well as the difference structure factor file with the corresponding sigma file by adjusting the `LABIN` labels accordingly.
 
+# Usage
+Before running the script, make sure that you have the corresponding `.phs` and `.hkl` file in two directories (in this case it is phs and hkl) and make sure that the labels in the **concentration matrix** `.csv` file, has the same naming as the files. 
+
+The script can be run with the following commands:
+
+`python kinetic_deconvolution.py --concentrations concentrations.csv --phs-dir phs --hkl-dir hkl --dark-sigma dark_scaled.hkl --dark-phase dark_phase.hkl --out-prefix state`
+
+The script first loads and displays the concentration matrix, including the number and names of the structural intermediates. It then performs phase correction and amplitude sign adjustment of the input difference structure factors.
+
+The script filters reflections based on their presence across the dataset. By default, reflections present in at least 12 of the 17 timepoints are retained.
+
+The resulting kinetic modes are saved as `.phs` files containing the deconvoluted difference structure factor amplitudes and phases, together with corresponding `.hkl` files containing the propagated uncertainties. These files can be used for further structure factor extrapolation (see below `How to continue from here`).
+
+The generated `.phs` files can be converted to `.mtz` format using `f2mtz` from CCP4. Electron density maps can then be calculated using `fft` in CCP4 for visualization. We provide a `phs_to_map.sh` CCP4 script, which can be used to convert the final `.phs` files to DED maps. It can be run in the terminal by simply doing:
+`tcsh phs_to_map.sh <state_name>` 
+You can then take a look at the deconvoluted maps in coot using the reference `.pdb`. 
 
 # Simulated data - Example 
-As described in the paper, difference structure factors were simulated for 17 timepoints containing different concentrations of four structural intermediates of the photoactive yellow protein (PYP). 
+As described in the paper, difference structure factors were simulated for 17 timepoints containing different concentrations of four structural intermediates of the photoactive yellow protein (PYP). For the provided simulated dataset, no reflections require phase correction because the phases and amplitudes were already generated consistently. Similarly, all 9786 reflections pass the filtering criterion.
 
 The provided example dataset contains:
 - A dark-state phase file (`.hkl`)
@@ -44,21 +60,6 @@ The provided example dataset contains:
 - The concentration matrix describing the population of each structural intermediate at each timepoint
 
 These files can be used to reproduce the example analysis described in the paper. They also serve as a reference for the required input format, including the expected column organization and data labels.
-
-# Usage
-The script can be run on the simulated data with the following commands:
-
-`python kinetic_deconvolution.py --concentrations concentrations.csv --phs-dir phs --hkl-dir hkl --dark-sigma dark_scaled.hkl --dark-phase dark_phase.hkl --out-prefix state`
-
-The script first loads and displays the concentration matrix, including the number and names of the structural intermediates. It then performs phase correction and amplitude sign adjustment of the input difference structure factors. For the provided simulated dataset, no reflections require phase correction because the phases and amplitudes were already generated consistently.
-
-The script filters reflections based on their presence across the dataset. By default, reflections present in at least 12 of the 17 timepoints are retained. For the ideal simulated dataset, all 9786 reflections pass this criterion.
-
-The resulting kinetic modes are saved as `.phs` files containing the reconstructed difference structure factor amplitudes and phases, together with corresponding `.hkl` files containing the propagated uncertainties. These files can be used for further structure factor extrapolation.
-
-The generated `.phs` files can be converted to `.mtz` format using `f2mtz` from CCP4. Electron density maps can then be calculated using `fft` in CCP4 for visualization. We provide a `phs_to_map.sh` CCP4 script, which can be used to convert the final `.phs` files to DED maps. It can be run in the terminal by simply doing:
-`tcsh phs_to_map.sh state_1_pr0` 
-You can then take a look at the deconvoluted maps in coot using the `dark.pdb`. 
 
 # How to continue from here 
 The deconvoluted weighted difference structure factors (`.phs` file), together with the propagated sigmas (`.hkl` file) can now be used to calculate extrapolated structure factors. For that, we provide a CCP4/python script, which takes the generated files together with the calculated structure factors fo the reference state (`dark_phase.hkl` file) and calculate **extrapolated structure factors** by
@@ -75,7 +76,7 @@ The `create_diff_map` and `create_extrapol_map` workflow can also be used for ti
 # Citation 
 When using the provided scripts, please cite as follows:
 
-- Lukas Grunewald, Petra Meszaros, Sebastian Westenhoff, Visualizing Reaction Pathways via Reciprocal Space Kinetic Decomposition, submitted (2026).
+- Grunewald, L. et al., Visualizing Reaction Pathways via Reciprocal Space Kinetic Decomposition, submitted (2026).
 
 Please also cite the software and workflow on which these scripts are based:
 - Agirre, J. et al., The CCP4 suite: integrative software for macromolecular crystallography, Acta Crystallogr. D. Biol. Crystallogr. 67, 235–242 (2011).
