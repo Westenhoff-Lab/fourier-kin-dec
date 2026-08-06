@@ -60,4 +60,4 @@ You can then take a look at the deconvoluted maps in coot using the `dark.pdb`.
 
 # How to continue from here 
 The deconvoluted weighted difference structure factors (`.phs` file), together with the propagated sigmas (`.hkl` file) can now be used to calculate extrapolated structure factors. For that, we provide a CCP4/python script, which takes the generated files together with the calculated structure factors fo the reference state (`dark_phase.hkl` file) and calculates extrapolated structure factors by
-`$F_ext$ = $F_calc$ + N * ($\omega$ * $\Delta F_obs$ )`.
+F<sub>ext</sub> = F<sub>calc</sub> + N × (ω × ΔF<sub>obs</sub>)
