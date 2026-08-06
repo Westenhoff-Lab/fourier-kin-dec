@@ -60,4 +60,20 @@ You can then take a look at the deconvoluted maps in coot using the `dark.pdb`.
 
 # How to continue from here 
 The deconvoluted weighted difference structure factors (`.phs` file), together with the propagated sigmas (`.hkl` file) can now be used to calculate extrapolated structure factors. For that, we provide a CCP4/python script, which takes the generated files together with the calculated structure factors fo the reference state (`dark_phase.hkl` file) and calculates extrapolated structure factors by
-F<sub>ext</sub> = F<sub>calc</sub> + N × (ω × ΔF<sub>obs</sub>)
+F<sub>ext</sub> = F<sub>calc</sub> + N × (ω × ΔF<sub>obs</sub>), where N is an extrapolation factor which corresponds to the photoactivation yield 2/occupancy.
+
+Before running the script, adjust the input file names and crystal information at the beginning of the script using a text editor. The script can then be executed as:
+`tcsh make_extrapol_map.sh <add_factor> <timepoint/state_name>` 
+
+From the resulting extrapolated `.mtz` file, structures can be refined using either CCP4 or phenix. Important to note here is, that the refined structures will most likely result in high R<sub>work</sub> and R<sub>free</sub> values due to keeping dark phases. 
+
+# Conventional workflow 
+The `create_diff_map` and `create_extrapol_map` workflow can also be used for timepoints without using the deconvolution approach. This workflow is based on Schmidt (2023, Structural Dynamics). 
+
+# Citation 
+When using the provided scripts, please cite as follows:
+
+- Lukas Grunewald, Petra Meszaros, Sebastian Westenhoff, Visualizing Reaction Pathways via Reciprocal Space Kinetic Decomposition, submitted (2026).
+Please also cite the software and workflow on which these scripts are based:
+- Agirre, J. et al., The CCP4 suite: integrative software for macromolecular crystallography, Acta Crystallogr. D. Biol. Crystallogr. 67, 235–242 (2011).
+- Schmidt, M., Practical considerations for the analysis of time-resolved x-ray data, Struct. Dyn. 10, 044303 (2023).
