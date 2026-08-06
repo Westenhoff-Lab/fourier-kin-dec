@@ -63,7 +63,7 @@ The deconvoluted weighted difference structure factors (`.phs` file), together w
 F<sub>ext</sub> = F<sub>calc</sub> + N × (ω × ΔF<sub>obs</sub>), where N is an extrapolation factor which corresponds to the photoactivation yield 2/occupancy. Several methods have been proposed to estimate N, and users should determine it using their method of choice.
 
 Before running the script, adjust the input file names and crystal information at the beginning of the script using a text editor. The script can then be executed as:
-`tcsh make_extrapol_map.sh <add_factor> <timepoint/state_name>` 
+`tcsh make_extrapol_map.sh <extrapolation_factor> <timepoint/state_name>` 
 
 From the resulting extrapolated `.mtz` file, structures can be refined using either CCP4 or phenix. Important to note here is, that the refined structures will most likely result in high R<sub>work</sub> and R<sub>free</sub> values due to the phase error introduced when adding difference amplitudes to the dark state structure factors. The true light phase can be estimated, and a script for generating **phased extrapolated structure factors** will be made available soon. 
 
