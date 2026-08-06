@@ -59,7 +59,7 @@ The generated `.phs` files can be converted to `.mtz` format using `f2mtz` from 
 You can then take a look at the deconvoluted maps in coot using the `dark.pdb`. 
 
 # How to continue from here 
-The deconvoluted weighted difference structure factors (`.phs` file), together with the propagated sigmas (`.hkl` file) can now be used to calculate extrapolated structure factors. For that, we provide a CCP4/python script, which takes the generated files together with the calculated structure factors fo the reference state (`dark_phase.hkl` file) and calculates **extrapolated structure factors** by
+The deconvoluted weighted difference structure factors (`.phs` file), together with the propagated sigmas (`.hkl` file) can now be used to calculate extrapolated structure factors. For that, we provide a CCP4/python script, which takes the generated files together with the calculated structure factors fo the reference state (`dark_phase.hkl` file) and calculate **extrapolated structure factors** by
 F<sub>ext</sub> = F<sub>calc</sub> + N × (ω × ΔF<sub>obs</sub>), where N is an extrapolation factor which corresponds to the photoactivation yield 2/occupancy. Several methods have been proposed to estimate N, and users should determine it using their method of choice.
 
 Before running the script, adjust the input file names and crystal information at the beginning of the script using a text editor. The script can then be executed as:
