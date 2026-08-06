@@ -2,7 +2,7 @@
 This python code performs kinetic deconvolution of time-resolved difference structure factors directly in Fourier (reciprocal) space. Given a kinetic model (species occupancies over time) and a series of experimental difference structure factors $\Delta F$ + uncertainties $\sigma$, the program reconstructs the difference structure factors corresponding to the individual kinetic intermediates while propagating experimental uncertainties.
 
 # Requirements
-The script requires Python 3 together with the numpy and pandas packages. The remaining imported modules (argparse, pathlib and collections) are part of the Python standard library when you create a conda environment. CCP4 is required to generate the input `.hkl` and `.phs` files from MTZ files (e.g. using `mtz2various`) or through the provided `create_diff_map` pipeline, which uses CCP4 tools to calculate weighted difference structure factors and generate the required input files. Once the input files have been prepared, the kinetic deconvolution can be run without any other crystallographic programs. For visualization or conversion of your results, you can use the `f2mtz` and `fft` program in CCP4 or the equivalent tools in phenix. The CCP4 installation instructions can be found here: https://www.ccp4.ac.uk/download/doc/installation.html
+The script requires Python 3 together with the numpy and pandas packages. The remaining imported modules (argparse, pathlib and collections) are part of the Python standard library when you create a conda environment. We recommend to install CCP4, which is required to generate the required input `.hkl` and `.phs` files through the provided `create_diff_map` pipeline. Once the input files have been prepared, the kinetic deconvolution can be run without any other crystallographic programs. For visualization or conversion of your results, you can use the `f2mtz` and `fft` program in CCP4 or the equivalent tools in phenix. Furthermore, the provided `make_extrapol_map.sh` script also requires CCP4. The CCP4 installation instructions can be found here: https://www.ccp4.ac.uk/download/doc/installation.html
 
 
 # Input data 
@@ -16,11 +16,13 @@ The program requires:
 
 The expected column layout for each input file is defined at the beginning of the Python script (`PHS_COLUMNS`, `HKL_COLUMNS`, and `DARK_PHASE_COLUMNS`). 
 
+## Generating the input data via our diff_map scripts 
 The recommended way to generate the required `.phs/.hkl` input files is using the pipeline provided in the `create_diff_map` folder. The script `make_dmap.sh` generates weighted difference structure factors and difference maps from raw crystallographic data and exports all input files required for the kinetic deconvolution. Given raw structure factor amplitudes for the light data (`FOBS_<timepoint>.mtz`), raw amplitudes for the reference data (`FOBS_<reference>.mtz`), a refined reference model (`<reference>.pdb`), and the corresponding MTZ file containing reference phases (`<reference>.mtz`), the script runs the full CCP4/Python pipeline.
 
 Before running the script, adjust the input file names, column labels, and crystal information at the beginning of the script using a text editor. The script can then be executed as:
 `tcsh make_dmap.sh <timepoint>` 
 
+## Alternative way to generate the input data 
 Alternatively, the required `.hkl` and `.phs` files can be written from MTZ files using `mtz2various`. Example command for exporting the **dark-state phase file** are shown below. 
 
 `mtz2various HKLIN input.mtz HKLOUT dark_phase.hkl << EOF \\
