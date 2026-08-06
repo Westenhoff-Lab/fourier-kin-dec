@@ -74,6 +74,7 @@ The `create_diff_map` and `create_extrapol_map` workflow can also be used for ti
 When using the provided scripts, please cite as follows:
 
 - Lukas Grunewald, Petra Meszaros, Sebastian Westenhoff, Visualizing Reaction Pathways via Reciprocal Space Kinetic Decomposition, submitted (2026).
+
 Please also cite the software and workflow on which these scripts are based:
 - Agirre, J. et al., The CCP4 suite: integrative software for macromolecular crystallography, Acta Crystallogr. D. Biol. Crystallogr. 67, 235–242 (2011).
 - Schmidt, M., Practical considerations for the analysis of time-resolved x-ray data, Struct. Dyn. 10, 044303 (2023).
