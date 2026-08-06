@@ -1,0 +1,1 @@
+Here you can find a script to calculate extrapolated structure factors. You need the <light>_scaled.hkl, <light>_diff.phs and a dark_phase.hkl file, which is being generated either from the create_dmap script or from the kinetic deconvolution.
