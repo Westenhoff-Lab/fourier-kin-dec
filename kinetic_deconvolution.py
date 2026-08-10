@@ -38,6 +38,7 @@ Example
         --hkl-dir data/hkl --hkl-pattern "{label}_sigma.hkl" \\
         --dark-sigma dark_scaled.hkl \\
         --dark-phase dark_phase.hkl \\
+        --min-occurence 12 \\
         --out-prefix kinetic_mode
 
 concentrations.csv layout (one row per timepoint, in processing order):
@@ -143,7 +144,7 @@ def adjust_ded_amplitudes_df(ded_df, dark_phase_df):
     return adjusted
 
 
-def filter_common_reflections(data, data_sigma, min_occurrence=12):
+def filter_common_reflections(data, data_sigma, min_occurrence):
     """
     Keep reflections present in at least `min_occurrence` timepoints.
 
@@ -193,7 +194,7 @@ def filter_common_reflections(data, data_sigma, min_occurrence=12):
     return filtered_data, filtered_sigma, full_index
 
 
-def load_datasets(labels, phs_dir, phs_pattern, hkl_dir, hkl_pattern, dark_phase):
+def load_datasets(labels, phs_dir, phs_pattern, hkl_dir, hkl_pattern, dark_phase, min_occurrence):
     """
     Load per-timepoint difference amplitudes (.phs) and sigmas (.hkl).
 
@@ -215,7 +216,7 @@ def load_datasets(labels, phs_dir, phs_pattern, hkl_dir, hkl_pattern, dark_phase
     data, data_sigma, hkl_index = filter_common_reflections(
         data,
         data_sigma,
-        min_occurrence=12)
+        min_occurrence=min_occurrence)
 
     return data, data_sigma, hkl_index
 
@@ -362,17 +363,22 @@ def main():
              "are dropped from the output (guards against numerical instability in "
              "experimental data). Default: 1e6.",
     )
+    parser.add_argument("--min-occurrence", type=int, required=True, help="Keep reflections present in at least this many timepoints")
     parser.add_argument("--out-prefix", default="state")
     args = parser.parse_args()
 
     labels, C, species_names = load_concentration_matrix(args.concentrations)
+    if not 1 <= args.min_occurrence <= len(labels):
+      parser.error(
+          f"--min-occurrence must be between 1 and {len(labels)}"
+      )
     print(f"Loaded concentration matrix: {C.shape[0]} timepoints x {C.shape[1]} species")
     print(f"Species: {species_names}")
 
     dark_phase = load_phase(args.dark_phase)
 
     data, data_sigma, hkl_index = load_datasets(
-        labels, args.phs_dir, args.phs_pattern, args.hkl_dir, args.hkl_pattern, dark_phase
+        labels, args.phs_dir, args.phs_pattern, args.hkl_dir, args.hkl_pattern, dark_phase, args.min_occurence
     )
 
     dark_sigma_df = load_hkl(args.dark_sigma)
