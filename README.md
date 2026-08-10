@@ -38,11 +38,11 @@ Before running the script, make sure that you have the corresponding `.phs` and 
 
 The script can be run with the following commands:
 
-`python kinetic_deconvolution.py --concentrations concentrations.csv --phs-dir phs --hkl-dir hkl --dark-sigma dark_scaled.hkl --dark-phase dark_phase.hkl --out-prefix state`
+`python kinetic_deconvolution.py --concentrations concentrations.csv --phs-dir phs --hkl-dir hkl --dark-sigma dark_scaled.hkl --dark-phase dark_phase.hkl --min-occurrence 12 --out-prefix state`
 
 The script first loads and displays the concentration matrix, including the number and names of the structural intermediates. It then performs phase correction and amplitude sign adjustment of the input difference structure factors.
 
-The script filters reflections based on their presence across the dataset. By default, reflections present in at least 12 of the 17 timepoints are retained.
+The script filters reflections based on their presence across the dataset. Here we want to keep reflections present in at least 12 of the 17 timepoints.
 
 The resulting kinetic modes are saved as `.phs` files containing the deconvoluted difference structure factor amplitudes and phases, together with corresponding `.hkl` files containing the propagated uncertainties. These files can be used for further structure factor extrapolation (see below `How to continue from here`).
 
