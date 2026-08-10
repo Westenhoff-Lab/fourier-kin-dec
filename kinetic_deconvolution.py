@@ -38,7 +38,7 @@ Example
         --hkl-dir data/hkl --hkl-pattern "{label}_sigma.hkl" \\
         --dark-sigma dark_scaled.hkl \\
         --dark-phase dark_phase.hkl \\
-        --min-occurence 12 \\
+        --min-occurrence 12 \\
         --out-prefix kinetic_mode
 
 concentrations.csv layout (one row per timepoint, in processing order):
@@ -378,7 +378,7 @@ def main():
     dark_phase = load_phase(args.dark_phase)
 
     data, data_sigma, hkl_index = load_datasets(
-        labels, args.phs_dir, args.phs_pattern, args.hkl_dir, args.hkl_pattern, dark_phase, args.min_occurence
+        labels, args.phs_dir, args.phs_pattern, args.hkl_dir, args.hkl_pattern, dark_phase, args.min_occurrence
     )
 
     dark_sigma_df = load_hkl(args.dark_sigma)
