@@ -42,7 +42,7 @@ The script can be run with the following commands:
 
 The script first loads and displays the concentration matrix, including the number and names of the structural intermediates. It then performs phase correction and amplitude sign adjustment of the input difference structure factors.
 
-The script filters reflections based on their presence across the dataset. Here we want to keep reflections present in at least 12 of the 17 timepoints.
+The script filters reflections based on their presence across the dataset. You need to keep at least as many common reflections that are equal to the number of underlying kinetic states. We recommend, however, to retain around 70% of common reflections. In this example above, we want to keep reflections present in at least 12 of the 17 timepoints.
 
 The resulting kinetic modes are saved as `.phs` files containing the deconvoluted difference structure factor amplitudes and phases, together with corresponding `.hkl` files containing the propagated uncertainties. These files can be used for further structure factor extrapolation (see below `How to continue from here`).
 
