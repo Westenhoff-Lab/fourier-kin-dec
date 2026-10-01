@@ -279,11 +279,19 @@ def solve_kinetic_modes(C_matrix, data_matrix):
                 C.T @ y
             )
 
-        except:
-            print(np.sum(idx))
+        except Exception as e:
+            print(
+                "Valid timepoints:", np.sum(idx),
+                "Rank:", np.linalg.matrix_rank(C),
+                "Shape:", C.shape,
+                "Error:", e
+            )
             count += 1
 
-    print("count", count)
+    print(
+        f"{count} reflections could not be decomposed because "
+        f"the concentration matrix was rank-deficient."
+    )
 
     return M_basis
 
@@ -411,7 +419,7 @@ def main():
 
         # --- .phs output: difference amplitude, phase, and a recomputed weight ---
         valid_phs = valid_voxel_mask(
-            adjusted_amplitude, adjusted_phase, cutoff=args.amplitude_cutoff
+            adjusted_amplitude, adjusted_phase, sigma_propagated, cutoff=args.amplitude_cutoff
         )
         weight = np.full_like(adjusted_amplitude, np.nan)
         weight[valid_phs] = voxel_weights_from_sigma(
